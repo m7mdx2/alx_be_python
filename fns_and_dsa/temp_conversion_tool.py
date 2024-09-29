@@ -1,48 +1,35 @@
-def display_menu():
-    print("\nShopping List Manager")
-    print("1. Add Item")
-    print("2. Remove Item")
-    print("3. View List")
-    print("4. Exit")
+# Define global conversion factors
+FAHRENHEIT_TO_CELSIUS_FACTOR = 5 / 9
+CELSIUS_TO_FAHRENHEIT_FACTOR = 9 / 5
+
+def convert_to_celsius(fahrenheit):
+    """Converts Fahrenheit to Celsius using the global conversion factor."""
+    return (fahrenheit - 32) * FAHRENHEIT_TO_CELSIUS_FACTOR
+
+def convert_to_fahrenheit(celsius):
+    """Converts Celsius to Fahrenheit using the global conversion factor."""
+    return (celsius * CELSIUS_TO_FAHRENHEIT_FACTOR) + 32
 
 def main():
-    shopping_list = []  # Initialize an empty shopping list
-    while True:
-        display_menu()  # Display the menu options
-        choice = input("Enter your choice: ")  # Get the user's choice
+    try:
+        # Ask the user for the temperature input
+        temp = float(input("Enter the temperature to convert: "))
+        # Ask the user to specify the unit of the temperature
+        unit = input("Is this temperature in Celsius or Fahrenheit? (C/F): ").strip().upper()
 
-        if choice == '1':
-            # Adding an item to the shopping list
-            item_to_add = input("Enter the item to add: ")
-            shopping_list.append(item_to_add)  # Add the item to the list
-            print(f"'{item_to_add}' has been added to the shopping list.")
-
-        elif choice == '2':
-            # Removing an item from the shopping list
-            item_to_remove = input("Enter the item to remove: ")
-            if item_to_remove in shopping_list:
-                shopping_list.remove(item_to_remove)  # Remove the item if it exists
-                print(f"'{item_to_remove}' has been removed from the shopping list.")
-            else:
-                print(f"'{item_to_remove}' not found in the shopping list.")
-
-        elif choice == '3':
-            # Viewing the shopping list
-            if shopping_list:
-                print("Current shopping list:")
-                for item in shopping_list:
-                    print(f"- {item}")  # Print each item in the list
-            else:
-                print("Your shopping list is empty.")
-
-        elif choice == '4':
-            # Exiting the program
-            print("Goodbye!")
-            break  # Exit the loop, ending the program
-
+        if unit == 'C':
+            # Convert Celsius to Fahrenheit
+            result = convert_to_fahrenheit(temp)
+            print(f"{temp}°C is {result}°F")
+        elif unit == 'F':
+            # Convert Fahrenheit to Celsius
+            result = convert_to_celsius(temp)
+            print(f"{temp}°F is {result}°C")
         else:
-            # Handling invalid choices
-            print("Invalid choice. Please try again.")
+            print("Invalid unit. Please enter 'C' for Celsius or 'F' for Fahrenheit.")
+    
+    except ValueError:
+        print("Invalid temperature. Please enter a numeric value.")
 
 if __name__ == "__main__":
     main()
